@@ -1,16 +1,13 @@
 import filecmp
 import os
-import time
-
-
 
 def checker():
     if not filecmp.cmp("files/past_details.txt","files/current_details.txt"):
-        cur = open("files/current_details.txt")
+        cur = open("files/current_details.txt","r")
         cur_arr = cur.readlines()
         cur.close()
 
-        old = open("files/past_details.txt")
+        old = open("files/past_details.txt","r")
         old_arr = old.readlines()
         old.close()
 
@@ -29,9 +26,7 @@ def checker():
         new_closed.close()
 
         # write the current file to the past file
-        os.remove("files/past_details.txt")
+        file = open("files/past_details.txt","w")
+        file.truncate(0)
+        file.close()
         os.system('cp files/current_details.txt files/past_details.txt')
-
-# while True:
-checker()
-    # time.sleep(30)

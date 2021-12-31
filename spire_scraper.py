@@ -7,12 +7,13 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.chrome.service import Service
 
 
-import selenium
 import time
 import random
 import datetime
 import re
 import os
+
+import details_checker
 
 
 USERNAME = os.getenv('SPIRE_USERNAME')
@@ -138,11 +139,15 @@ def extract_class_details_in_series(num):
             class_counter += 1
     except:
         log_error("Might have no open classes or timeout error")
+        exit(-1)
     
-    os.remove("files/current_details.txt")
     file = open("files/current_details.txt", "w")
+    file.truncate(0)
     for line in details:
         file.write(line + "\n")
+    file.close()
+    # Update other files
+    details_checker.checker()
 
 def return_to_start_new_search():
     try:
